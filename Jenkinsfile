@@ -7,12 +7,6 @@ pipeline {
 
     stages {
 
-        stage('Clone Code') {
-            steps {
-                git credentialsId: 'github-creds', url: 'https://github.com/shivshankar66/devopscloud.git'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t $DOCKER_IMAGE .'
@@ -39,15 +33,6 @@ pipeline {
                 sh 'kubectl apply -f service.yaml'
                 sh 'kubectl rollout restart deployment react-app'
             }
-        }
-    }
-
-    post {
-        success {
-            echo "✅ Build Success 🚀"
-        }
-        failure {
-            echo "❌ Build Failed"
         }
     }
 }
